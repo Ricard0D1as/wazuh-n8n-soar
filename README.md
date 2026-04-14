@@ -1,4 +1,4 @@
-markdown# Wazuh + n8n SOAR Lab
+# Wazuh + n8n SOAR Lab
 
 Automated SOC workflow: Wazuh FIM alerts → IP enrichment (AbuseIPDB + VirusTotal) → Discord notification using n8n.
 
