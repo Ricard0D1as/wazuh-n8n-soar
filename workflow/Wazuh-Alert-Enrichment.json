@@ -55,7 +55,9 @@
         -96
       ],
       "id": "0b2c5f22-10fd-498e-838f-77aa559b83a2",
-      "name": "AbuseIPDB Enrichment"
+      "name": "AbuseIPDB Enrichment",
+      "retryOnFail": false,
+      "onError": "continueRegularOutput"
     },
     {
       "parameters": {
@@ -129,7 +131,21 @@
         -96
       ],
       "id": "eaa3a22f-4ab7-484b-ad6e-5186aea17faf",
-      "name": "VirusTotal Enrichment"
+      "name": "VirusTotal Enrichment",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Log ignored alerts - abuse score was 0 or below threshold\nconst alert = $('Webhook').item.json.body;\n\nconsole.log(`[IGNORED] ${alert.timestamp} | Rule: ${alert.rule_id} | IP: ${alert.src_ip} | Agent: ${alert.agent_name}`);\n\nreturn {\n  status: \"ignored\",\n  reason: \"abuse_score_below_threshold\",\n  rule_id: alert.rule_id,\n  src_ip: alert.src_ip,\n  agent_name: alert.agent_name,\n  timestamp: alert.timestamp\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "da621023-974b-4ff1-b720-d1d695f71e6e",
+      "name": "Log Ignored Alert"
     }
   ],
   "pinData": {},
@@ -164,6 +180,13 @@
             "type": "main",
             "index": 0
           }
+        ],
+        [
+          {
+            "node": "Log Ignored Alert",
+            "type": "main",
+            "index": 0
+          }
         ]
       ]
     },
@@ -184,7 +207,7 @@
     "executionOrder": "v1",
     "binaryMode": "separate"
   },
-  "versionId": "5adb9df4-7d5a-41b8-87a6-efb7d7d12655",
+  "versionId": "a4d1d47d-adce-46fe-a90f-78dec29af5f4",
   "meta": {
     "instanceId": "55d000f7a013a825aa3f6c1408b1c4b35a70910fc51665b15581f1b89ad6de38"
   },
