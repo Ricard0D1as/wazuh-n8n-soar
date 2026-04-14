@@ -189,9 +189,9 @@ Expected Discord output:
 - Agent: Debian13GreenDPR
 
 ## Screenshots
-![Webhook node configured](../screenshots/03-n8n-workflow/Webhook-configured.png)
+![Webhook node configured](../screenshots/03-n8n-workflow/Webhook_configured.png)
 ![n8n workflow canvas](../screenshots/03-n8n-workflow/Operational_nodes.png)
-![AbuseIPDB output](../screenshots/03-n8n-workflow/AbuseIPDB-output.png)
+![AbuseIPDB output](../screenshots/03-n8n-workflow/AbuseIPDB_output.png)
 ![VirusTotal output](../screenshots/03-n8n-workflow/VirusTotal_output.png)
-![Discord alert](../screenshots/04-final-result/Discort_alert_msg.png)
+![Discord alert](../screenshots/04-final-result/Discord_alert_msg.png)
 ![False branch - Log Ignored Alert](../screenshots/03-n8n-workflow/false_branch_log.png)
