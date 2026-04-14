@@ -133,7 +133,7 @@ Agent: TestAgent
 ## 📸 Screenshots
 
 ### n8n Workflow Canvas
-![Workflow Canvas](screenshots/03-n8n-workflow/Operational_nodes.png)
+![Workflow Canvas](screenshots/03-n8n-workflow/false_branch_log.png)
 
 ### Discord Alert
 ![Discord Alert](screenshots/04-final-result/Discord_alert_msg.png)
