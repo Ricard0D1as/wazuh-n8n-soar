@@ -1,0 +1,193 @@
+{
+  "name": "Wazuh Alert Enrichment",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "wazuh-alert",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -624,
+        -96
+      ],
+      "id": "d08496b3-a6e5-4104-ac56-1633e21afc3c",
+      "name": "Webhook",
+      "webhookId": "198f30cb-60c9-4dde-9520-8e5aa04f58cc"
+    },
+    {
+      "parameters": {
+        "url": "https://api.abuseipdb.com/api/v2/check",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "ipAddress",
+              "value": "={{ $json.body.src_ip }}"
+            },
+            {
+              "name": "maxAgeInDays",
+              "value": "90"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Key",
+              "value": "dd7eb35bb65988af71d87cb08d986057d61bff620b7494ba60cfe361c1743c4255e4205e11ea237e"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -416,
+        -96
+      ],
+      "id": "0b2c5f22-10fd-498e-838f-77aa559b83a2",
+      "name": "AbuseIPDB Enrichment"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "35fb1ab7-9c0e-417e-8c46-ac9597214f5d",
+              "leftValue": "={{ $('AbuseIPDB Enrichment').item.json.data.abuseConfidenceScore }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        0,
+        -96
+      ],
+      "id": "e6f2dba9-476e-41a3-b8a7-ad8ca01f6694",
+      "name": "Threat Filter"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://discord.com/api/webhooks/1493635412365807757/oqUnxiDhRaAPM-0EmmUqJzjSxm6QD2FFwgIxyUIizxZ_Loj8AtGhpOo1UL982OSeHZU4",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"embeds\": [{\n    \"title\": \"🚨 Wazuh Security Alert\",\n    \"color\": 15158332,\n    \"fields\": [\n      {\n        \"name\": \"📋 Rule\",\n        \"value\": \"{{ $('Webhook').item.json.body.rule_desc }}\",\n        \"inline\": false\n      },\n      {\n        \"name\": \"🌐 Source IP\",\n        \"value\": \"{{ $('Webhook').item.json.body.src_ip }}\",\n        \"inline\": true\n      },\n      {\n        \"name\": \"⚠️ Abuse Score\",\n        \"value\": \"{{ $('AbuseIPDB Enrichment').item.json.data.abuseConfidenceScore }}%\",\n        \"inline\": true\n      },\n      {\n        \"name\": \"🦠 VT Malicious Votes\",\n        \"value\": \"{{ $('VirusTotal Enrichment').item.json.data.attributes.total_votes.malicious }}\",\n        \"inline\": true\n      },\n      {\n        \"name\": \"🖥️ Agent\",\n        \"value\": \"{{ $('Webhook').item.json.body.agent_name }}\",\n        \"inline\": true\n      },\n      {\n        \"name\": \"🕐 Timestamp\",\n        \"value\": \"{{ $('Webhook').item.json.body.timestamp }}\",\n        \"inline\": true\n      }\n    ],\n    \"footer\": {\n      \"text\": \"Wazuh SOAR Lab | n8n Automation\"\n    }\n  }]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        208,
+        -192
+      ],
+      "id": "0c5ea0b5-e3a2-4267-8dab-86e5c171d1c2",
+      "name": "Discord Notification"
+    },
+    {
+      "parameters": {
+        "url": "=https://www.virustotal.com/api/v3/ip_addresses/{{ $('Webhook').item.json.body.src_ip }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-apikey",
+              "value": "eed7d55dcea50c1606a6ea04329961dbe56b44c51a4b3f7819440ec3889fc46d"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -208,
+        -96
+      ],
+      "id": "eaa3a22f-4ab7-484b-ad6e-5186aea17faf",
+      "name": "VirusTotal Enrichment"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "AbuseIPDB Enrichment",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AbuseIPDB Enrichment": {
+      "main": [
+        [
+          {
+            "node": "VirusTotal Enrichment",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Threat Filter": {
+      "main": [
+        [
+          {
+            "node": "Discord Notification",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "VirusTotal Enrichment": {
+      "main": [
+        [
+          {
+            "node": "Threat Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "5adb9df4-7d5a-41b8-87a6-efb7d7d12655",
+  "meta": {
+    "instanceId": "55d000f7a013a825aa3f6c1408b1c4b35a70910fc51665b15581f1b89ad6de38"
+  },
+  "id": "ay9mwj4TVNOF25XO",
+  "tags": []
+}
