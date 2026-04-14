@@ -1,4 +1,4 @@
-markdown# 03 — n8n Workflow: Wazuh Alert Enrichment
+# 03 — n8n Workflow: Wazuh Alert Enrichment
 
 ## Overview
 n8n workflow that receives Wazuh alerts, enriches the source IP with
@@ -124,7 +124,35 @@ Headers:
 }
 ```
 
-## Step 6 — Publish workflow
+
+## Step 6 - False Branch — Log Ignored Alert node
+
+Alerts that don't meet the threat threshold (abuse score = 0) are
+logged silently instead of being discarded — maintaining a complete
+audit trail of all processed alerts.
+
+- **Type:** Code (JavaScript)
+- **Branch:** Threat Filter → false
+
+```javascript
+const alert = $('Webhook').item.json.body;
+
+console.log(`[IGNORED] ${alert.timestamp} | Rule: ${alert.rule_id} | IP: ${alert.src_ip} | Agent: ${alert.agent_name}`);
+
+return {
+  status: "ignored",
+  reason: "abuse_score_below_threshold",
+  rule_id: alert.rule_id,
+  src_ip: alert.src_ip,
+  agent_name: alert.agent_name,
+  timestamp: alert.timestamp
+};
+```
+
+> This ensures every alert is accounted for — either escalated to
+> Discord or logged as low risk. No alert is silently dropped.
+
+## Step 7 — Publish workflow
 
 Click **"Publish"** at the top right to activate the workflow in
 production mode — it will now run automatically without test mode.
@@ -166,3 +194,4 @@ Expected Discord output:
 ![AbuseIPDB output](../screenshots/03-n8n-workflow/AbuseIPDB-output.png)
 ![VirusTotal output](../screenshots/03-n8n-workflow/VirusTotal_output.png)
 ![Discord alert](../screenshots/04-final-result/Discort_alert_msg.png)
+![False branch - Log Ignored Alert](../screenshots/03-n8n-workflow/false_branch_log.png)
