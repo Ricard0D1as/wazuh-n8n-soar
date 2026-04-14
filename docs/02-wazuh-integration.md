@@ -1,4 +1,4 @@
-markdown# 02 — Wazuh Custom Integration
+# 02 — Wazuh Custom Integration
 
 ## Overview
 Custom integration that forwards Wazuh alerts to n8n via HTTP POST.
