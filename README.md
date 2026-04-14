@@ -6,13 +6,13 @@ Built as part of a Cybersecurity Specialization (CET) lab at CINEL, Lisbon.
 
 ---
 
-## 🎯 Objective
+## Objective
 
 Demonstrate a real-world SOAR (Security Orchestration, Automation and Response) pipeline using open-source tools, triggered by File Integrity Monitoring (FIM) events in Wazuh.
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 Wazuh FIM (alert) → custom-n8n.py → nginx (HTTPS/443) → n8n webhook
 → AbuseIPDB enrichment
 → VirusTotal enrichment
@@ -21,7 +21,7 @@ Wazuh FIM (alert) → custom-n8n.py → nginx (HTTPS/443) → n8n webhook
 
 ---
 
-## 🛠️ Stack
+## Stack
 
 | Tool | Role |
 |------|------|
@@ -35,7 +35,7 @@ Wazuh FIM (alert) → custom-n8n.py → nginx (HTTPS/443) → n8n webhook
 
 ---
 
-## 📁 Repository Structure
+## Repository Structure
 wazuh-n8n-soar/
 ├── README.md
 ├── docs/
@@ -54,7 +54,7 @@ wazuh-n8n-soar/
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 - Wazuh Manager 4.x running
@@ -120,7 +120,7 @@ curl -k -X POST https://YOUR_N8N_IP/webhook-test/wazuh-alert \
 ```
 
 Expected result in Discord:
-🚨 Wazuh Security Alert
+Wazuh Security Alert
 Rule: File added to /root directory
 Source IP: 185.220.101.45
 Abuse Score: 100%
@@ -132,10 +132,10 @@ Agent: TestAgent
 ## 📸 Screenshots
 
 ### n8n Workflow Canvas
-![Workflow Canvas](screenshots/03-n8n-workflow/workflow-canvas.png)
+![Workflow Canvas](screenshots/03-n8n-workflow/Operational_nodes.png)
 
 ### Discord Alert
-![Discord Alert](screenshots/04-final-result/discord-alert.png)
+![Discord Alert](screenshots/04-final-result/Discord_alert_msg.png)
 
 ---
 
