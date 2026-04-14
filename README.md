@@ -36,21 +36,22 @@ Wazuh FIM (alert) → custom-n8n.py → nginx (HTTPS/443) → n8n webhook
 ---
 
 ## Repository Structure
-wazuh-n8n-soar/
-├── README.md
-├── docs/
-│   ├── 01-n8n-installation.md
-│   ├── 02-wazuh-integration.md
-│   └── 03-n8n-workflow.md
-├── screenshots/
-│   ├── 01-installation/
-│   ├── 02-wazuh/
-│   ├── 03-n8n-workflow/
-│   └── 04-final-result/
-├── workflow/
-│   └── wazuh-alert-enrichment.json
-└── config/
-└── wazuh-custom-integration.py
+
+    wazuh-n8n-soar/
+    ├── README.md
+    ├── docs/
+    │   ├── 01-n8n-installation.md
+    │   ├── 02-wazuh-integration.md
+    │   └── 03-n8n-workflow.md
+    ├── screenshots/
+    │   ├── 01-installation/
+    │   ├── 02-wazuh/
+    │   ├── 03-n8n-workflow/
+    │   └── 04-final-result/
+    ├── workflow/
+    │   └── wazuh-alert-enrichment.json
+    └── config/
+        └── wazuh-custom-integration.py
 
 ---
 
