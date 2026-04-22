@@ -42,7 +42,7 @@
             },
             {
               "name": "Key",
-              "value": "dd7eb35bb65988af71d87cb08d986057d61bff620b7494ba60cfe361c1743c4255e4205e11ea237e"
+              "value": "YOUR_ABUSEIPDB_API_KEY"
             }
           ]
         },
@@ -95,7 +95,7 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "https://discord.com/api/webhooks/1493635412365807757/oqUnxiDhRaAPM-0EmmUqJzjSxm6QD2FFwgIxyUIizxZ_Loj8AtGhpOo1UL982OSeHZU4",
+        "url": "YOUR_DISCORD_WEBHOOK_URL",
         "sendBody": true,
         "specifyBody": "json",
         "jsonBody": "={\n  \"embeds\": [{\n    \"title\": \"🚨 Wazuh Security Alert\",\n    \"color\": 15158332,\n    \"fields\": [\n      {\n        \"name\": \"📋 Rule\",\n        \"value\": \"{{ $('Webhook').item.json.body.rule_desc }}\",\n        \"inline\": false\n      },\n      {\n        \"name\": \"🌐 Source IP\",\n        \"value\": \"{{ $('Webhook').item.json.body.src_ip }}\",\n        \"inline\": true\n      },\n      {\n        \"name\": \"⚠️ Abuse Score\",\n        \"value\": \"{{ $('AbuseIPDB Enrichment').item.json.data.abuseConfidenceScore }}%\",\n        \"inline\": true\n      },\n      {\n        \"name\": \"🦠 VT Malicious Votes\",\n        \"value\": \"{{ $('VirusTotal Enrichment').item.json.data.attributes.total_votes.malicious }}\",\n        \"inline\": true\n      },\n      {\n        \"name\": \"🖥️ Agent\",\n        \"value\": \"{{ $('Webhook').item.json.body.agent_name }}\",\n        \"inline\": true\n      },\n      {\n        \"name\": \"🕐 Timestamp\",\n        \"value\": \"{{ $('Webhook').item.json.body.timestamp }}\",\n        \"inline\": true\n      }\n    ],\n    \"footer\": {\n      \"text\": \"Wazuh SOAR Lab | n8n Automation\"\n    }\n  }]\n}",
@@ -118,7 +118,7 @@
           "parameters": [
             {
               "name": "x-apikey",
-              "value": "eed7d55dcea50c1606a6ea04329961dbe56b44c51a4b3f7819440ec3889fc46d"
+              "value": "YOUR_VIRUSTOTAL_API_KEY"
             }
           ]
         },
